@@ -31,7 +31,6 @@ public class AgentCharacter : MonoBehaviour, IDirectionalRotatable, IDamageable
     public Quaternion CurrentRotation => _rotator.CurrentRotation;
     public bool InJumpProcess => _jumper.InProcess;
 
-
     public float Health => _healthSystem.CurrentHealth;
     public float MaxHealth => _healthSystem.MaxHealth;
     public float InjuredThreshold => _injuredThreshold;
@@ -96,6 +95,8 @@ public class AgentCharacter : MonoBehaviour, IDirectionalRotatable, IDamageable
         _isDamageTaken = true;
         return _healthSystem.TakeDamage(damageAmount);
     }
+
+    public float TakeHeal(float healAmount) => _healthSystem.TakeHeal(healAmount);
 
     public bool TryGetDamageTaken()
     {

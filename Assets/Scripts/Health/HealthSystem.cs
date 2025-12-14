@@ -25,4 +25,14 @@ public class HealthSystem
 
         return _currentHealth;
     }
+
+    public float TakeHeal(float healAmount)
+    {
+        _currentHealth += healAmount;
+
+        if (_currentHealth > _maxHealth)
+            _currentHealth = _maxHealth;
+
+        return _currentHealth;
+    }
 }

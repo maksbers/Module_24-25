@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class ControllersManager : MonoBehaviour
 {
     [SerializeField] private AgentCharacter _agentCharacter;
-    [SerializeField] private ClickPointerView _clickPointerView;
+    [SerializeField] private ClickPointer _clickPointerView;
 
     private Controller _playerCharacterController;
     private Controller _aiCharacterController;

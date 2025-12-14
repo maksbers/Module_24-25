@@ -18,7 +18,6 @@ public class Bomb : MonoBehaviour
 
     private IEnumerator CoroutineExplosion()
     {
-        Debug.Log("Start coroutine");
         yield return new WaitForSeconds(_delay);
 
         Explode();

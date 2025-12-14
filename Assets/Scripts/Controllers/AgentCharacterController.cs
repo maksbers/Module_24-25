@@ -21,10 +21,7 @@ public class AgentCharacterController : Controller
         if (_agentCharacter.IsOnNavMeshLink(out OffMeshLinkData offMeshLinkData))
         {
             if (_agentCharacter.InJumpProcess == false)
-            {
-                //_agentCharacter.SetRotationDirection(offMeshLinkData.endPos - offMeshLinkData.startPos);
                 _agentCharacter.Jump(offMeshLinkData);
-            }
 
             return;
         }
