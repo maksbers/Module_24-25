@@ -5,9 +5,12 @@ public class ClickPointer : MonoBehaviour
     [SerializeField] private VFXManager _vfxManager;
     private InputController _inputController;
 
+    private AudioManager _audioManager;
+
     public void Initialize(InputController inputController)
     {
         _inputController = inputController;
+        _audioManager = AudioManager.Instance;
     }
 
     private void Update()
@@ -16,6 +19,9 @@ public class ClickPointer : MonoBehaviour
             return;
 
         if (_inputController.HasNewTarget)
+        {
             _vfxManager.SpawnPrefab(_vfxManager.PointerPrefab, _inputController.TakeTarget());
+            _audioManager.PlayPointClick();
+        }
     }
 }

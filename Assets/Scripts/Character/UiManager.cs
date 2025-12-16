@@ -7,20 +7,25 @@ public class UiManager : MonoBehaviour
     [SerializeField] private AgentCharacter _character;
     [SerializeField] private HealSpawner _healSpawner;
 
-    [SerializeField] private Image _spawnButtonImage;
+    [SerializeField] private Image _toggleSpawnHealButton;
+    [SerializeField] private Image _toggleMusicButton;
 
     [SerializeField] private Color _activeButtonColor = Color.white;
     [SerializeField] private Color _inactiveButtonColor = Color.gray;
+
+    private AudioManager _audioManager;
 
     private float _maxHealth;
 
     private void Start()
     {
+        _audioManager = AudioManager.Instance;
+
         if (_character != null)
             _maxHealth = _character.Health;
 
         if (_healSpawner != null)
-            UpdateSpawnButtonColor(_healSpawner.IsEnableHealSpawn);
+            UpdateButtonColor(_toggleSpawnHealButton, _healSpawner.IsEnableHealSpawn);
     }
 
     private void Update()
@@ -44,27 +49,45 @@ public class UiManager : MonoBehaviour
         if (_healSpawner == null)
             return;
 
+        _audioManager.PlayButtonClick();
+
         if (_healSpawner.IsEnableHealSpawn)
         {
             _healSpawner.SetHealSpawnDisable();
-            UpdateSpawnButtonColor(false);
+            UpdateButtonColor(_toggleSpawnHealButton, false);
         }
         else
         {
             _healSpawner.SetHealSpawnEnable();
-            UpdateSpawnButtonColor(true);
+            UpdateButtonColor(_toggleSpawnHealButton, true);
         }
     }
 
-    private void UpdateSpawnButtonColor(bool isActive)
+    public void ToggleMusicPlay()
     {
-        if (_spawnButtonImage == null)
+        if (_audioManager == null)
             return;
 
-        if (isActive)
-            _spawnButtonImage.color = _activeButtonColor;
+        _audioManager.PlayButtonClick();
+
+        if (_audioManager.IsMusicOn)
+        {
+            _audioManager.ToggleMusicOff();
+            UpdateButtonColor(_toggleMusicButton, false);
+        }
         else
-            _spawnButtonImage.color = _inactiveButtonColor;
+        {
+            _audioManager.ToggleMusicOn();
+            UpdateButtonColor(_toggleMusicButton, true);
+        }
+    }
+
+    private void UpdateButtonColor(Image button, bool isActive)
+    {
+        if (isActive)
+            button.color = _activeButtonColor;
+        else
+            button.color = _inactiveButtonColor;
     }
 }
 

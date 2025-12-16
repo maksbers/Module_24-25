@@ -11,13 +11,19 @@ public class AgentCharacterView : MonoBehaviour
     private const string InjuredLayerName = "InjuredLayer";
     private int _injuredLayerIndex;
 
+    [SerializeField] private float _injuredRunPitchAmount = 0.4f;
+
     [SerializeField] private Animator _animator;
     [SerializeField] private AgentCharacter _character;
 
+    private AudioManager _audioManager;
+
+    private bool _wasJumping;
     private bool _isDead;
 
     private void Awake()
     {
+        _audioManager = AudioManager.Instance;
         _injuredLayerIndex = _animator.GetLayerIndex(InjuredLayerName);
     }
 
@@ -39,9 +45,16 @@ public class AgentCharacterView : MonoBehaviour
         if (_character.TryGetDamageTaken())
             _animator.SetTrigger(IsAttackedKey);
 
-        _animator.SetBool(InJumpProcessKey, _character.InJumpProcess);
 
-        if (_character.CurrentVelocity.magnitude > _runningThreshold)
+        bool isJumping = _character.InJumpProcess;
+        _animator.SetBool(InJumpProcessKey, isJumping);
+
+        if (isJumping && _wasJumping != true)
+            _audioManager.PlayJump();
+
+        _wasJumping = isJumping;
+
+        if (_character.CurrentVelocity.magnitude > _runningThreshold && isJumping != true)
             StartRunning();
         else
             StopRunning();
@@ -57,7 +70,22 @@ public class AgentCharacterView : MonoBehaviour
         _animator.SetLayerWeight(_injuredLayerIndex, injuredWeight);
     }
 
-    private void StartRunning() => _animator.SetBool(IsRunningKey, true);
+    private void StartRunning()
+    {
+        _animator.SetBool(IsRunningKey, true);
 
-    private void StopRunning() => _animator.SetBool(IsRunningKey, false);
+        float currentPitch = 1.0f;
+
+        if (_character.Health <= _character.MaxHealth * _character.InjuredThreshold)
+            currentPitch = _injuredRunPitchAmount;
+
+        _audioManager.ToggleRunSFX(true, currentPitch);
+    }    
+
+    private void StopRunning()
+    {
+        _animator.SetBool(IsRunningKey, false);
+
+        _audioManager.ToggleRunSFX(false);
+    }
 }
