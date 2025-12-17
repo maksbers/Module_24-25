@@ -10,6 +10,7 @@ public class AudioHandler
     private const string KeyMusic = "VolumeMusic";
     private const string KeySFX = "VolumeSFX";
     private const string KeyNoiseBG = "VolumeNoiseBG";
+    private const string KeyDefeatSnapshot = "DefeatEffect";
 
     private AudioMixer _mixer;
 
@@ -30,6 +31,12 @@ public class AudioHandler
 
     public void OffNoiseBG() => OffVolume(KeyNoiseBG);
     public void OnNoiseBG() => OnVolume(KeyNoiseBG);
+
+    public void SwitchToDefeatEffect(float time)
+    {
+        AudioMixerSnapshot defeatEffect = _mixer.FindSnapshot(KeyDefeatSnapshot);
+        defeatEffect.TransitionTo(time);
+    }
 
     private bool IsVolumeOn(string key)
         => _mixer.GetFloat(key, out float  volume) && Mathf.Abs(volume - OnVolumeValue) <= MinDifferenceValue;

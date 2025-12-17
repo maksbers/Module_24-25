@@ -34,6 +34,7 @@ public class AgentCharacter : MonoBehaviour, IDirectionalRotatable, IDamageable
     public float Health => _healthSystem.CurrentHealth;
     public float MaxHealth => _healthSystem.MaxHealth;
     public float InjuredThreshold => _injuredThreshold;
+    public bool IsInjured => Health <= MaxHealth * _injuredThreshold;
     public bool IsDead => _healthSystem.IsDead;
 
 
@@ -74,7 +75,7 @@ public class AgentCharacter : MonoBehaviour, IDirectionalRotatable, IDamageable
 
     private float CalculateSpeedModifier()
     {
-        if (Health <= MaxHealth * _injuredThreshold)
+        if (IsInjured)
             return _injuredMoveSpeedModifier;
 
         return 1f;

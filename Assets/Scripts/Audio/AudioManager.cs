@@ -13,10 +13,22 @@ public class AudioManager : MonoBehaviour
     private AudioHandler _audioHandler;
 
     [SerializeField] private AudioClip _buttonClickSFX;
+    [SerializeField] private float _buttonClickVolume = 1f;
+
     [SerializeField] private AudioClip _pointClickSFX;
+    [SerializeField] private float _pointClickVolume = 1f;
+
     [SerializeField] private AudioClip _jumpSFX;
+    [SerializeField] private float _jumpVolume = 1f;
+
     [SerializeField] private AudioClip _explosionSFX;
+    [SerializeField] private float _explosionVolume = 1f;
+
     [SerializeField] private AudioClip _healCollectSFX;
+    [SerializeField] private float _healCollectVolume = 1f;
+
+    [SerializeField] private float _injuredRunPitchAmount = 0.4f;
+    [SerializeField] private float _defeatTime = 1.5f;
 
 
     public bool IsMusicOn => _audioHandler.IsMusicOn();
@@ -37,13 +49,16 @@ public class AudioManager : MonoBehaviour
     public void ToggleMusicOn() => _audioHandler.OnMusic();
     public void ToggleMusicOff() => _audioHandler.OffMusic();
 
-    public void ToggleRunSFX(bool isRunning, float pitch = 1.0f)
+    public void ToggleRunSFX(bool isRunning, bool isInjured = false)
     {
         if (isRunning)
         {
-            _audioSourceRun.pitch = pitch;
+            if (isInjured)
+                _audioSourceRun.pitch = _injuredRunPitchAmount;
+            else
+                _audioSourceRun.pitch = 1.0f;
 
-            if (!_audioSourceRun.isPlaying)
+            if (_audioSourceRun.isPlaying != true)
                 _audioSourceRun.Play();
         }
         else
@@ -53,11 +68,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayButtonClick() => PlaySfx(_buttonClickSFX);
-    public void PlayPointClick() => PlaySfx(_pointClickSFX);
-    public void PlayJump() => PlaySfx(_jumpSFX);
-    public void PlayExplosion() => PlaySfx(_explosionSFX);
-    public void PlayHealCollect() => PlaySfx(_healCollectSFX);
+    public void PlayButtonClick() => PlaySfx(_buttonClickSFX, _buttonClickVolume);
+    public void PlayPointClick() => PlaySfx(_pointClickSFX, _pointClickVolume);
+    public void PlayJump() => PlaySfx(_jumpSFX, _jumpVolume);
+    public void PlayExplosion() => PlaySfx(_explosionSFX, _explosionVolume);
+    public void PlayHealCollect() => PlaySfx(_healCollectSFX, _healCollectVolume);
 
-    private void PlaySfx(AudioClip _clip) => _audioSourceSFX.PlayOneShot(_clip);
+    public void SwitchToDefeatEffect() => _audioHandler.SwitchToDefeatEffect(_defeatTime);
+
+    private void PlaySfx(AudioClip _clip, float volume = 1f) => _audioSourceSFX.PlayOneShot(_clip, volume);
 }

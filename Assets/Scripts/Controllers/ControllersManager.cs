@@ -14,7 +14,7 @@ public class ControllersManager : MonoBehaviour
     private InputController _inputController;
 
 
-    private void Awake()
+    private void Start()
     {
         _groundClickRaycaster = new GroundClickRaycaster(_agentCharacter.GroundLayer);
         _inputController = new InputController(_groundClickRaycaster);

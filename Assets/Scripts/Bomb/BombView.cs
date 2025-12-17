@@ -10,7 +10,7 @@ public class BombView : MonoBehaviour
 
     private AudioManager _audioManager;
 
-    private void Awake()
+    private void Start()
     {
         _animator = GetComponent<Animator>();
         _audioManager = AudioManager.Instance;
@@ -22,6 +22,7 @@ public class BombView : MonoBehaviour
     {
         ParticleSystem instantiatedEffect = Instantiate(_explosionEffect, transform.position, Quaternion.identity);
         instantiatedEffect.Play();
+
         _audioManager.PlayExplosion();
     }
 }

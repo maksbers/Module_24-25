@@ -11,8 +11,6 @@ public class AgentCharacterView : MonoBehaviour
     private const string InjuredLayerName = "InjuredLayer";
     private int _injuredLayerIndex;
 
-    [SerializeField] private float _injuredRunPitchAmount = 0.4f;
-
     [SerializeField] private Animator _animator;
     [SerializeField] private AgentCharacter _character;
 
@@ -38,6 +36,8 @@ public class AgentCharacterView : MonoBehaviour
                 _isDead = true;
                 _animator.SetTrigger(DieKey);
                 StopRunning();
+
+                _audioManager.SwitchToDefeatEffect();
             }
             return;
         }
@@ -64,7 +64,7 @@ public class AgentCharacterView : MonoBehaviour
     {
         float injuredWeight = 0f;
 
-        if (_character.Health <= _character.MaxHealth * _character.InjuredThreshold)
+        if (_character.IsInjured)
             injuredWeight = 1f;
 
         _animator.SetLayerWeight(_injuredLayerIndex, injuredWeight);
@@ -74,12 +74,7 @@ public class AgentCharacterView : MonoBehaviour
     {
         _animator.SetBool(IsRunningKey, true);
 
-        float currentPitch = 1.0f;
-
-        if (_character.Health <= _character.MaxHealth * _character.InjuredThreshold)
-            currentPitch = _injuredRunPitchAmount;
-
-        _audioManager.ToggleRunSFX(true, currentPitch);
+        _audioManager.ToggleRunSFX(true, _character.IsInjured);
     }    
 
     private void StopRunning()

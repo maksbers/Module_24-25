@@ -1,5 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!245 &-7523479152222472016
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DefeatEffect
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 4e951794e84f3154caa1769ad5f02ed6
+  m_FloatValues:
+    f7adc77ada5264542b92c6841206bd1e: 0
+    108dde6f81714af4cacbfd0d2a83af3d: 250
+  m_TransitionOverrides: {}
+--- !u!244 &-6101556193201543544
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 5bd5df57fa3f6b14f96add65761123ef
+  m_EffectName: Lowpass Simple
+  m_MixLevel: 4af0d7d9a5bca7b42b041f575b08488b
+  m_Parameters:
+  - m_ParameterName: Cutoff freq
+    m_GUID: 108dde6f81714af4cacbfd0d2a83af3d
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-1026624501888021619
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -25,6 +54,7 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
+  - {fileID: -7523479152222472016}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
@@ -44,7 +74,7 @@ AudioMixerController:
     - 016d0db6adbe540409d465c5ea1952ef
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500006}
+  m_TargetSnapshot: {fileID: -7523479152222472016}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -63,6 +93,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
+  - {fileID: -6101556193201543544}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -92,6 +123,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: d5b692dca7db1c048a2edd30978af073
   m_FloatValues:
     f7adc77ada5264542b92c6841206bd1e: 0
+    108dde6f81714af4cacbfd0d2a83af3d: 22000
   m_TransitionOverrides: {}
 --- !u!243 &412331598204306672
 AudioMixerGroupController:
