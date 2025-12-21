@@ -3,7 +3,7 @@ using UnityEngine;
 public class HealItem : MonoBehaviour, ICollectable
 {
     [SerializeField] private float _healValue = 30f;
-    
+
     private VFXManager _vfxManager;
     private AudioManager _audioManager;
 
@@ -16,16 +16,20 @@ public class HealItem : MonoBehaviour, ICollectable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out AgentCharacter character))
-            PickUp(character);
+        if (other.TryGetComponent(out IHealable healable))
+            PickUp(other.gameObject);
     }
 
-    public void PickUp(AgentCharacter character)
+    public void PickUp(GameObject collector)
     {
-        character.TakeHeal(_healValue);
-        _vfxManager.SpawnPrefab(_vfxManager.HealVfxPrefab, transform.position);
-        _audioManager.PlayHealCollect();
+        if (collector.TryGetComponent(out IHealable healable))
+        {
+            healable.TakeHeal(_healValue);
 
-        Destroy(gameObject);
+            _vfxManager.SpawnPrefab(_vfxManager.HealVfxPrefab, transform.position);
+            _audioManager.PlayHealCollect();
+
+            Destroy(gameObject);
+        }
     }
 }

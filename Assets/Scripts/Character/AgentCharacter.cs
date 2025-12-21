@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentCharacter : MonoBehaviour, IDirectionalRotatable, IDamageable
+public class AgentCharacter : MonoBehaviour, IDirectionalRotatable, IDamageable, IHealable
 {
     [SerializeField] private float _maxHealth = 100f;
     [SerializeField] private float _injuredMoveSpeedModifier = 0.3f;

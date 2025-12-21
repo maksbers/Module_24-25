@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _spawnPrefab;
-    [SerializeField] private AgentCharacter _character;
+    [SerializeField] private Transform _spawnTarget;
     [SerializeField] private VFXManager _vfxManager;
 
     [SerializeField] private float _spawnRange = 5.0f;
@@ -33,8 +33,10 @@ public class HealSpawner : MonoBehaviour
 
     private void SpawnWithOffset()
     {
+        if (_spawnTarget == null) return;
+
         Vector3 randOffset = GenerateRandomOffset(_spawnRange);
-        Vector3 targetPos = _character.transform.position + randOffset;
+        Vector3 targetPos = _spawnTarget.position + randOffset;
 
         if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {

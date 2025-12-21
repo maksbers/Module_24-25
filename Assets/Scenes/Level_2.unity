@@ -9561,7 +9561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPrefab: {fileID: 8974832564904404824, guid: b08af2ca74d6dce44a5abf8286d6f476,
     type: 3}
-  _character: {fileID: 1780083230}
+  _spawnTarget: {fileID: 1780083228}
   _vfxManager: {fileID: 771376660}
   _spawnRange: 5
   _spawnRate: 3
